@@ -2,6 +2,8 @@ package utils
 
 import (
 	"context"
+	"fmt"
+	"github.com/google/go-cmp/cmp"
 	"reflect"
 	"sort"
 	"time"
@@ -101,3 +103,10 @@ func TimeFormat() string {
 func DefaultContext() (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), time.Second*30)
 }
+
+// NumberNormalizer normalizes different number types (e.g. float64 vs int64) by converting them to their string representation
+var NumberNormalizer = cmp.FilterValues(func(x, y interface{}) bool {
+	return IsNumber(x) || IsNumber(y)
+}, cmp.Transformer("NormalizeNumbers", func(in interface{}) string {
+	return fmt.Sprintf("%v", in)
+}))
