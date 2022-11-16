@@ -18,4 +18,4 @@ CONTROLLER_GEN=$(shell which controller-gen)
 endif
 
 generate: controller-gen
-	$(CONTROLLER_GEN) paths="./..." object
+	$(CONTROLLER_GEN) paths="./pkg/validation" object
