@@ -29,3 +29,14 @@ type MismatchContentDetails struct {
 	ElasticsearchContent string `json:"elasticsearchContent,omitempty"`
 	DatabaseContent      string `json:"databaseContent,omitempty"`
 }
+
+// +k8s:deepcopy-gen=true
+type DatasourceDBConnection struct {
+	SslMode  string `json:"sslMode,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Hostname string `json:"hostname,omitempty"`
+	Password string `json:"password,omitempty"`
+	Username string `json:"username,omitempty"`
+	Table    string `json:"table,omitempty"`
+	Port     string `json:"port,omitempty"`
+}
