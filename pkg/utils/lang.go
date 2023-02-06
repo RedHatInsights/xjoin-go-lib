@@ -32,14 +32,6 @@ func ContainsString(list []string, s string) bool {
 	return false
 }
 
-func Abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-
-	return x
-}
-
 func IsNumber(x interface{}) bool {
 	kind := reflect.TypeOf(x).Kind()
 	return kind >= 2 && kind <= 16
