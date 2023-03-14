@@ -2,11 +2,21 @@ package pkg
 
 // +k8s:deepcopy-gen=true
 type ValidationResponse struct {
-	Result  string          `json:"result,omitempty"`
-	Reason  string          `json:"reason,omitempty"`
-	Message string          `json:"message,omitempty"`
-	Details ResponseDetails `json:"details,omitempty"`
+	Result  ValidationResult `json:"result,omitempty"`
+	Reason  string           `json:"reason,omitempty"`
+	Message string           `json:"message,omitempty"`
+	Details ResponseDetails  `json:"details,omitempty"`
 }
+
+// ValidationResult from the validation run.
+// +enum
+type ValidationResult string
+
+// These are the possible validation results.
+const (
+	ValidationValid   = "valid"
+	ValidationInvalid = "invalid"
+)
 
 // +k8s:deepcopy-gen=true
 type ResponseDetails struct {
