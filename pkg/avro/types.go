@@ -88,8 +88,7 @@ func (t *TypeWrapper) UnmarshalJSON(typeBytes []byte) (err error) {
 	err = json.Unmarshal(typeBytes, &typeString)
 
 	if err == nil {
-		var typeObj Type
-		typeObj = Type{
+		var typeObj = Type{
 			Type: typeString,
 		}
 		*t = []Type{typeObj}
