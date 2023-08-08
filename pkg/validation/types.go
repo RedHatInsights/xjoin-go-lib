@@ -20,17 +20,21 @@ const (
 
 // +k8s:deepcopy-gen=true
 type ResponseDetails struct {
-	TotalMismatch int `json:"totalMismatch,omitempty"`
+	TotalMismatch                    int                      `json:"totalMismatch,omitempty"`
+	IdsMissingFromElasticsearch      []string                 `json:"idsMissingFromElasticsearch,omitempty"`
+	IdsMissingFromElasticsearchCount int                      `json:"idsMissingFromElasticsearchCount,omitempty"`
+	IdsOnlyInElasticsearch           []string                 `json:"idsOnlyInElasticsearch,omitempty"`
+	IdsOnlyInElasticsearchCount      int                      `json:"idsOnlyInElasticsearchCount,omitempty"`
+	IdsWithMismatchContent           []string                 `json:"idsWithMismatchContent,omitempty"`
+	MismatchContentDetails           []MismatchContentDetails `json:"mismatchContentDetails,omitempty"`
+	Counts                           Counts                   `json:"counts,omitempty"`
+}
 
-	IdsMissingFromElasticsearch      []string `json:"idsMissingFromElasticsearch,omitempty"`
-	IdsMissingFromElasticsearchCount int      `json:"idsMissingFromElasticsearchCount,omitempty"`
-
-	IdsOnlyInElasticsearch      []string `json:"idsOnlyInElasticsearch,omitempty"`
-	IdsOnlyInElasticsearchCount int      `json:"idsOnlyInElasticsearchCount,omitempty"`
-
-	IdsWithMismatchContent []string `json:"idsWithMismatchContent,omitempty"`
-
-	MismatchContentDetails []MismatchContentDetails `json:"mismatchContentDetails,omitempty"`
+type Counts struct {
+	RecordsInElasticsearch int `json:"recordsInElasticsearch"`
+	RecordsInDatabase      int `json:"recordsInDatabase"`
+	IDsValidated           int `json:"idsValidated"`
+	ContentsValidated      int `json:"contentsValidated"`
 }
 
 // +k8s:deepcopy-gen=true
