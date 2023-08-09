@@ -20,16 +20,17 @@ const (
 
 // +k8s:deepcopy-gen=true
 type ResponseDetails struct {
-	TotalMismatch                    int                      `json:"totalMismatch,omitempty"`
-	IdsMissingFromElasticsearch      []string                 `json:"idsMissingFromElasticsearch,omitempty"`
-	IdsMissingFromElasticsearchCount int                      `json:"idsMissingFromElasticsearchCount,omitempty"`
-	IdsOnlyInElasticsearch           []string                 `json:"idsOnlyInElasticsearch,omitempty"`
-	IdsOnlyInElasticsearchCount      int                      `json:"idsOnlyInElasticsearchCount,omitempty"`
-	IdsWithMismatchContent           []string                 `json:"idsWithMismatchContent,omitempty"`
-	MismatchContentDetails           []MismatchContentDetails `json:"mismatchContentDetails,omitempty"`
-	Counts                           Counts                   `json:"counts,omitempty"`
+	TotalMismatch                    int               `json:"totalMismatch,omitempty"`
+	IdsMissingFromElasticsearch      []string          `json:"idsMissingFromElasticsearch,omitempty"`
+	IdsMissingFromElasticsearchCount int               `json:"idsMissingFromElasticsearchCount,omitempty"`
+	IdsOnlyInElasticsearch           []string          `json:"idsOnlyInElasticsearch,omitempty"`
+	IdsOnlyInElasticsearchCount      int               `json:"idsOnlyInElasticsearchCount,omitempty"`
+	IdsWithMismatchContent           []string          `json:"idsWithMismatchContent,omitempty"`
+	MismatchContentDetails           MismatchedRecords `json:"mismatchContentDetails,omitempty"`
+	Counts                           Counts            `json:"counts,omitempty"`
 }
 
+// +k8s:deepcopy-gen=true
 type Counts struct {
 	RecordsInElasticsearch int `json:"recordsInElasticsearch"`
 	RecordsInDatabase      int `json:"recordsInDatabase"`
@@ -38,11 +39,14 @@ type Counts struct {
 }
 
 // +k8s:deepcopy-gen=true
-type MismatchContentDetails struct {
-	ID                   string `json:"id,omitempty"`
-	ElasticsearchContent string `json:"elasticsearchContent,omitempty"`
-	DatabaseContent      string `json:"databaseContent,omitempty"`
+type ContentDiff struct {
+	Diffs      []string `json:"diffs"`
+	ESDocument string   `json:"esDocument"`
+	DBRecord   string   `json:"dbRecord"`
 }
+
+// +k8s:deepcopy-gen=true
+type MismatchedRecords map[string]*ContentDiff //map of record id to diff details
 
 // +k8s:deepcopy-gen=true
 type DatasourceDBConnection struct {
