@@ -45,6 +45,10 @@ type ContentDiff struct {
 	DBRecord   string   `json:"dbRecord"`
 }
 
+func (i *ContentDiff) AddDiff(diff string) {
+	i.Diffs = append(i.Diffs, diff)
+}
+
 // +k8s:deepcopy-gen=true
 type MismatchedRecords map[string]*ContentDiff //map of record id to diff details
 
