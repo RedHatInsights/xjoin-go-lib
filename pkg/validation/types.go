@@ -14,8 +14,10 @@ type ValidationResult string
 
 // These are the possible validation results.
 const (
-	ValidationValid   = "valid"
-	ValidationInvalid = "invalid"
+	ValidationValid     ValidationResult = "valid"
+	ValidationInvalid   ValidationResult = "invalid"
+	ValidationNew       ValidationResult = "new"
+	ValidationUndefined ValidationResult = ""
 )
 
 // +k8s:deepcopy-gen=true
