@@ -22,22 +22,37 @@ const (
 
 // +k8s:deepcopy-gen=true
 type ResponseDetails struct {
-	TotalMismatch                    int               `json:"totalMismatch,omitempty"`
-	IdsMissingFromElasticsearch      []string          `json:"idsMissingFromElasticsearch,omitempty"`
-	IdsMissingFromElasticsearchCount int               `json:"idsMissingFromElasticsearchCount,omitempty"`
-	IdsOnlyInElasticsearch           []string          `json:"idsOnlyInElasticsearch,omitempty"`
-	IdsOnlyInElasticsearchCount      int               `json:"idsOnlyInElasticsearchCount,omitempty"`
-	IdsWithMismatchContent           []string          `json:"idsWithMismatchContent,omitempty"`
-	MismatchContentDetails           MismatchedRecords `json:"mismatchContentDetails,omitempty"`
-	Counts                           Counts            `json:"counts,omitempty"`
+	Counts  CountDetails   `json:"counts,omitempty"`
+	IDs     IdsDetails     `json:"ids,omitempty"`
+	Content ContentDetails `json:"content,omitempty"`
 }
 
 // +k8s:deepcopy-gen=true
-type Counts struct {
-	RecordsInElasticsearch int `json:"recordsInElasticsearch"`
-	RecordsInDatabase      int `json:"recordsInDatabase"`
-	IDsValidated           int `json:"idsValidated"`
-	ContentsValidated      int `json:"contentsValidated"`
+type CountDetails struct {
+	InconsistencyAbsolute      int     `json:"InconsistencyAbsolute"`
+	InconsistencyRatio         float64 `json:"inconsistencyRatio"`
+	RecordCountInElasticsearch int     `json:"recordCountInElasticsearch"`
+	RecordCountInDatabase      int     `json:"recordCountInDatabase"`
+}
+
+// +k8s:deepcopy-gen=true
+type IdsDetails struct {
+	InconsistencyAbsolute            int      `json:"InconsistencyAbsolute"`
+	InconsistencyRatio               float64  `json:"inconsistencyRatio"`
+	AmountValidated                  int      `json:"amountValidated"`
+	IdsMissingFromElasticsearch      []string `json:"idsMissingFromElasticsearch,omitempty"`
+	IdsMissingFromElasticsearchCount int      `json:"idsMissingFromElasticsearchCount,omitempty"`
+	IdsOnlyInElasticsearch           []string `json:"idsOnlyInElasticsearch,omitempty"`
+	IdsOnlyInElasticsearchCount      int      `json:"idsOnlyInElasticsearchCount,omitempty"`
+}
+
+// +k8s:deepcopy-gen=true
+type ContentDetails struct {
+	InconsistencyAbsolute  int               `json:"InconsistencyAbsolute"`
+	InconsistencyRatio     float64           `json:"inconsistencyRatio"`
+	AmountValidated        int               `json:"amountValidated"`
+	IdsWithMismatchContent []string          `json:"idsWithMismatchContent,omitempty"`
+	MismatchContentDetails MismatchedRecords `json:"mismatchContentDetails,omitempty"`
 }
 
 // +k8s:deepcopy-gen=true
